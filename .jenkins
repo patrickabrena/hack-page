@@ -1,9 +1,22 @@
 pipeline {
     agent any
     stages {
-        stage("Build") {
+        stage("Pull Repository") {
             steps {
-             sh 'echo "Hello World"'
+             script {
+                def sshHost = "18.191.88.173"
+                def sshUser = "ubuntu"
+                def privateKeyPath = "/home/patrick/multiWeb.pem"
+                def repoUrl = "git@github.com:patrickabrena/hack-page.git"
+                def localPath = "var/www/html"
+
+                sshCommand remote: [
+                    name: "SSH to EC2",
+                    host: sshHost,
+                    user: sshUser,
+                    identity: privateKeyPath
+                ], command: "git clone ${repoUrl} ${localPath}"
+             }
            }
         }
     }
