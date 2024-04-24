@@ -6,7 +6,7 @@ pipeline {
              script {
                 def sshHost = "ip-172-31-14-203"
                 def sshUser = "ubuntu"
-                def privateKeyPath = "/home/ubuntu/.ssh/id_rsa"
+                def privateKeyPath = "/home/ubuntu/.ssh/id_rsa.pem"
                 def repoUrl = "git@github.com:patrickabrena/hack-page.git"
                 def localPath = "var/www/html"
 
@@ -19,3 +19,4 @@ pipeline {
     }
 }
 //look at newest query in "SSH Cloning EC2 Pipeline". last attempt was switching def privateKeyPath to "/home/ubuntu/.ssh/id_rsa"
+// trying id_rsa.pem
