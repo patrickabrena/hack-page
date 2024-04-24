@@ -19,4 +19,6 @@ pipeline {
     }
 }
 //look at newest query in "SSH Cloning EC2 Pipeline". last attempt was switching def privateKeyPath to "/home/ubuntu/.ssh/id_rsa"
-// trying id_rsa.pem
+// trying id_rsa.pem //still didn't work
+
+// try chmod method iin lateest query of Cloning EC2 Pipeline
