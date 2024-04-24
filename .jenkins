@@ -4,9 +4,9 @@ pipeline {
         stage("Pull Repository") {
             steps {
              script {
-                def sshHost = "18.191.88.173"
+                def sshHost = "ip-172-31-14-203"
                 def sshUser = "ubuntu"
-                def privateKeyPath = "/home/patrick/multiWeb.pem"
+                def privateKeyPath = "/home/ubuntu/.ssh/"
                 def repoUrl = "git@github.com:patrickabrena/hack-page.git"
                 def localPath = "var/www/html"
 
