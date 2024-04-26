@@ -1,21 +1,30 @@
 pipeline {
     agent any
-    stages {
-        stage("Pull Repository") {
-            steps {
-             script {
-                def sshHost = "ip-172-31-14-203"
-                def sshUser = "ubuntu"
-                def privateKeyPath = "/home/ubuntu/.ssh/id_rsa.pem"
-                def repoUrl = "git@github.com:patrickabrena/hack-page.git"
-                def localPath = "var/www/html"
 
-                sshagent(['2f338a04-1f29-42e8-9ff9-03add894c545']) {
-                     sh "ssh -i ${privateKeyPath} ${sshUser}@${sshHost} 'git clone ${repoUrl} ${localPath}'"
+    environment {
+        GIT_REPO = 'https://github.com/patrickabrena/hack-page.git'
+        EC2_USER_AND_INSTANCE = 'ubuntu@ip-172-31-14-203'
+        KEY_FILE = '/home/patrick/multiWeb.pem'
+    }
+
+    stages {
+        stage('Clone Repo') {
+            steps {
+                script {
+                    // CLone the GIthub Repo
+                    sh "git clone ${GIT_REPO}"
                 }
-             }
-           }
+            }
+        }
+
+        stage('Copy to EC2') {
+            steps {
+                script {
+                    //Copy the repo contents to EC2 instance
+                    sshCommand remote: "${EC2_USER_AND_INSTANCE}", command: "scp -i ${KEY_FILE} -r ./hack-page/* ${EC2_USER_AND_INSTANCE}:/var/www/html/"
+                }
+            }
         }
     }
 }
-//chown and chmod to jenkins user and group still throws error for invalid known_hosts file
+//Trying out GPT's suggestion on Pipeline to Copy Repo
