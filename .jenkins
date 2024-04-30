@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                sh "cp * var/www/html"
+                sh "echo 'Hello World Test #2'"
             }
         }
 
