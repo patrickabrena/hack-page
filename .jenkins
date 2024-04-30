@@ -1,30 +1,15 @@
 pipeline {
     agent any
 
-    environment {
-        GIT_REPO = 'https://github.com/patrickabrena/hack-page.git'
-        EC2_USER_AND_INSTANCE = 'ubuntu@ip-172-31-14-203'
-        KEY_FILE = '/home/patrick/multiWeb.pem'
-    }
-
+  
     stages {
         stage('Clone Repo') {
             steps {
-                script {
-                    // CLone the GIthub Repo
-                    sh "git clone ${GIT_REPO}"
-                }
+                sh "cp * var/www/html"
             }
         }
 
-        stage('Copy to EC2') {
-            steps {
-                script {
-                    //Copy the repo contents to EC2 instance
-                    sshCommand remote: "${EC2_USER_AND_INSTANCE}", command: "scp -i ${KEY_FILE} -r ./hack-page/* ${EC2_USER_AND_INSTANCE}:/var/www/html/"
-                }
-            }
-        }
+        
     }
 }
 //Trying out GPT's suggestion on Pipeline to Copy Repo
