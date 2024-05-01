@@ -16,4 +16,4 @@ pipeline {
         
     }
 }
-//Trying out GPT's suggestion on Pipeline to Copy Repo
+//this version of the groovy script works! (05/01/2024)
