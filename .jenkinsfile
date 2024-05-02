@@ -1,19 +1,24 @@
 pipeline {
     agent any
 
-  
     stages {
-        stage('Clone Repo') {
+        stage('Clone Repository') {
             steps {
-                //clean up existing directory
-                sh "rm -rf /var/www/html/*"
+                // Debugging step: list files before removal
+                sh 'ls -la /var/www/html'
+                
+                // Remove existing contents of the directory
+                sh 'rm -rf /var/www/html/*'
 
-                // CLone the repo
-                sh "git clone https://github.com/patrickabrena/hack-page.git /var/www/html"
+                // Debugging step: list files after removal
+                sh 'ls -la /var/www/html'
+                
+                // Clone the repository
+                sh 'git clone https://github.com/patrickabrena/hack-page.git /var/www/html'
             }
         }
-
-        
     }
 }
-//this version of the groovy script works! (05/01/2024)
+
+//from GPT's suggestion on clone repo fix
+
