@@ -8,10 +8,10 @@ pipeline {
                 sh 'ls -la /var/www/html'
                 
                 // Remove existing contents of the directory
-                sh 'rm -rf /var/www/html/*'
+                sh 'rm -rf /var/www/html/'
 
                 // Debugging step: list files after removal
-                sh 'ls -la /var/www/html'
+                sh 'ls -la /var/www/'
                 
                 // Clone the repository
                 sh 'git clone https://github.com/patrickabrena/hack-page.git /var/www/html'
@@ -20,5 +20,5 @@ pipeline {
     }
 }
 
-//from GPT's suggestion on clone repo fix
+//remove "*" to delete the /html directory to see if error resolves
 
