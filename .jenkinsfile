@@ -5,7 +5,10 @@ pipeline {
         stage('Set Permissiions') {
             steps {
                 //change ownership of directory
-                sh 'sudo chown -R jenkins_user:jenkins_group /var/www/html'
+                sh 'groups jenkins'
+
+                // change directory permissions
+                sh 'sudo chmod -R 755 /var/www/html'
             }
         }
 
@@ -27,5 +30,5 @@ pipeline {
     }
 }
 
-//remove "*" to delete the /html directory to see if error resolves
+//look at latest output of "Clone Repo Error Fix" query and view the groups of jenkins
 
