@@ -6,7 +6,7 @@ pipeline {
         stage('Clone Repo') {
             steps {
                 //clean up existing directory
-                sh "rm -rf /var/www/html/*"
+                // sh "rm -rf /var/www/html/*"
 
                 // CLone the repo
                 sh "git clone https://github.com/patrickabrena/hack-page.git /var/www/html"
