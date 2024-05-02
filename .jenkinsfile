@@ -2,6 +2,13 @@ pipeline {
     agent any
 
     stages {
+        stage('Set Permissiions') {
+            steps {
+                //change ownership of directory
+                sh 'sudo chown -R jenkins_user:jenkins_group /var/www/html'
+            }
+        }
+
         stage('Clone Repository') {
             steps {
                 // Debugging step: list files before removal
