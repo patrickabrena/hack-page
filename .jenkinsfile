@@ -8,7 +8,7 @@ pipeline {
                 sh 'ls -la /var/www/html'
                 
                 // Remove existing contents of the directory
-                sh 'rm -rf /var/www/html/'
+                sh 'sudo rm -rf /var/www/html/'
 
                 // Debugging step: list files after removal
                 sh 'ls -la /var/www/'
