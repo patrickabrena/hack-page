@@ -10,7 +10,7 @@ pipeline {
                     def repoURL = 'git@github.com:patrickabrena/hack-page.git'
 
                     // Check if the directory is empty
-                    def isDirectoryEmpty = new File(directoryPath).list().length == 0
+                    def isDirectoryEmpty = fileExists(directoryPath) && readFile(directoryPath).trim() == ''
                     
                     // If the directory is empty, clone the repository
                     if (isDirectoryEmpty) {
