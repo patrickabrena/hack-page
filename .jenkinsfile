@@ -2,33 +2,30 @@ pipeline {
     agent any
 
     stages {
-        stage('Set Permissiions') {
-            steps {
-                //change ownership of directory
-                sh 'groups jenkins'
-
-                // change directory permissions
-                sh 'sudo chmod -R 755 /var/www/html'
-            }
-        }
-
+    
         stage('Clone Repository') {
             steps {
-                // Debugging step: list files before removal
-                sh 'ls -la /var/www/html'
-                
-                // Remove existing contents of the directory
-                sh 'sudo rm -rf /var/www/html/'
+                script {
+                    def directoryPath = '/var/www/html'
+                    def repoURL = 'git@github.com:patrickabrena/hack-page.git'
 
-                // Debugging step: list files after removal
-                sh 'ls -la /var/www/'
-                
-                // Clone the repository
-                sh 'git clone https://github.com/patrickabrena/hack-page.git /var/www/html'
+                    // Check if the directory is empty
+                    def isDirectoryEmpty = new File(directoryPath).list().length == 0
+                    
+                    // If the directory is empty, clone the repository
+                    if (isDirectoryEmpty) {
+                        sh "git clone $repoURL /var/www/html"
+                    } else {
+                        // If the directory is not empty, remove the current version and clone the repository
+                        sh "rm -rf /var/www/html/*"
+                        sh "git clone $repoURL /var/www/html"
+                }
             }
         }
     }
 }
+}
 
-//look at latest output of "Clone Repo Error Fix" query and view the groups of jenkins
+//look at latest query 'Glt clone Apache empty' to see possible use of if else statements to resolve cloning error
+
 
