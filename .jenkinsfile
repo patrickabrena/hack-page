@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage("Build") {
             steps {
-             sh 'cd var/www/html'
+             
              sh 'git clone git@github.com:patrickabrena/hack-page.git'
            }
         }
