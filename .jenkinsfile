@@ -1,31 +1,16 @@
 pipeline {
     agent any
-
     stages {
-    
-        stage('Clone Repository') {
+        stage("Build") {
             steps {
-                script {
-                    def directoryPath = '/var/www/html'
-                    def repoURL = 'git@github.com:patrickabrena/hack-page.git'
-
-                    // Check if the directory is empty
-                    def isDirectoryEmpty = fileExists(directoryPath) && readFile(directoryPath).trim() == ''
-                    
-                    // If the directory is empty, clone the repository
-                    if (isDirectoryEmpty) {
-                        sh "git clone $repoURL /var/www/html"
-                    } else {
-                        // If the directory is not empty, remove the current version and clone the repository
-                        sh "rm -rf /var/www/html/*"
-                        sh "git clone $repoURL /var/www/html"
-                }
-            }
+             sh 'cd var/www/html'
+             sh 'git clone git@github.com:patrickabrena/hack-page.git'
+           }
         }
     }
 }
-}
 
-//look at latest query 'Glt clone Apache empty' to see possible use of if else statements to resolve cloning error
+// supeer simplifed steps to attempt change directory into cd var/www/html and then git clone the hack repo into it
+
 
 
