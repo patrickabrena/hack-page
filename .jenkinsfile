@@ -1,16 +1,24 @@
 pipeline {
     agent any
     stages {
+
+        stage("Delete existing hack-page directory") {
+            steps {
+             
+             sh 'rm -r /var/www/html/hack-page'
+           }
+        }
+
         stage("Build") {
             steps {
              
-             sh 'sudo git pull origin main'
+             sh 'sudo git clone git@github.com:patrickabrena/hack-page.git /var/www/html/'
            }
         }
     }
 }
 
-// supeer simplifed steps to attempt change directory into cd var/www/html and then git clone the hack repo into it
+// 2 steps. 1st is to delete the current hack-page directory recursively and then 2nd is to git clone the remote repo into /var/www/html
 
 
 
