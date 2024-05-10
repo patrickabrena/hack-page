@@ -5,7 +5,7 @@ pipeline {
         stage("Delete existing hack-page directory") {
             steps {
              
-             sh 'rm -rf /var/www/html/hack-page'
+             sh 'sudo rm -rf /var/www/html/hack-page'
            }
         }
 
