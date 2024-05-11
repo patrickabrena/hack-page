@@ -1,32 +1,13 @@
 pipeline {
     agent any
     stages {
-
-        stage("Delete existing hack-page directory") {
-            steps {
-             
-             sh 'sudo rm -rf /var/www/html/hack-page'
-           }
-        }
-
-        stage("Build") {
-            steps {
-             script {
-                    // Start ssh-agent
-                    sh 'eval "$(ssh-agent -s)"'
-                    
-                    // Add your private key to the ssh-agent
-                    sh 'ssh-add /root/.ssh/id_rsa'
-                    
-                    // Execute git clone
-                    sh 'sudo git clone git@github.com:patrickabrena/hack-page.git /var/www/html/'
-                }
-           }
+        stage("Echo Test") {
+            "sh echo 'testing'"
         }
     }
 }
 
-// trying new sugggestion from 'ggit cloneo with ssh passphrase query'
+// scrap the code that's above, look at newest "Pull Changes with Groovy" query when I come back'
 
 
 
