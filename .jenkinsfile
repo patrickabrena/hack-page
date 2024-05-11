@@ -1,13 +1,15 @@
 pipeline {
     agent any
     stages {
-        stage("Echo Test") {
-            "sh echo 'testing'"
+        stage("checkout") {
+            steps {
+                git credentialsId: 'github' , url: 'https://github.com/patrickabrena/hack-page.git'
+            }
         }
     }
 }
 
-// scrap the code that's above, look at newest "Pull Changes with Groovy" query when I come back'
+// tryiing to do checkout with thiis simple scriipt
 
 
 
