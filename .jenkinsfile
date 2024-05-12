@@ -1,27 +1,14 @@
 
 pipeline {
     agent any
-    
-    environment {
-        SSH_KEY = credentials('2f338a04-1f29-42e8-9ff9-03add894c545') // Refer to your SSH credentials in Jenkins
-        SSH_KEY_FILE = '/root/.ssh/id_rsa' // Specify the path to your SSH key file
-    }
-    
     stages {
-        stage('Checkout') {
-            steps {
-                script {
-                    sshagent(credentials: ['2f338a04-1f29-42e8-9ff9-03add894c545']) {
-                        // Specify the path to your SSH key
-                        withCredentials([file(credentialsId: '2f338a04-1f29-42e8-9ff9-03add894c545', variable: 'SSH_KEY_FILE')]) {
-                            sh 'ssh-add $SSH_KEY_FILE'
-                            git 'git@github.com:patrickabrena/hack-page.git' // Use SSH URL of your repository
-                        }
-                    }
-                }
-            }
+        stage("Git Checkout") {
+            git branch: 'main', credentialsId: '2f338a04-1f29-42e8-9ff9-03add894c545', url: 'https://github.com/patrickabrena/hack-page.git'
         }
     }
+    
+    
+    
 }
 
 
