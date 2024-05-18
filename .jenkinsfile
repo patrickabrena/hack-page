@@ -1,10 +1,21 @@
 
 pipeline {
     agent any
+
+    environment {
+        PATH = "/opt/maven/bin:$PATH"
+    }
     stages {
         stage("Git Checkout") {
             steps {
             git branch: 'main', credentialsId: '2f338a04-1f29-42e8-9ff9-03add894c545', url: 'https://github.com/patrickabrena/hack-page.git'
+            }
+        }
+        
+        stage("Maven Build") {
+            steps {
+                // remember mvn isn't in this path so I need to specify environment variables
+                sh "mvn clean package"
             }
         }
     }
