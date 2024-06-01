@@ -2,9 +2,7 @@
 pipeline {
     agent any
 
-    environment {
-        PATH = "/opt/maven/bin:$PATH"
-    }
+    
     stages {
         stage("Git Checkout") {
             steps {
@@ -12,10 +10,10 @@ pipeline {
             }
         }
         
-        stage("Maven Build") {
+        stage("Secure Copy from Local to Remote") {
             steps {
-                // remember mvn isn't in this path so I need to specify environment variables
-                sh "mvn clean package"
+                // 
+
             }
         }
     }
@@ -26,7 +24,7 @@ pipeline {
 
 
 
-// following along with Java Home Cloud's Pipeline Tutorials currently on #2 and the code above refleects the Git Checkout lesson
+// trying to use 'scp' command now to copy files from 
 
 
 
