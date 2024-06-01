@@ -13,6 +13,19 @@ pipeline {
         stage("Secure Copy from Local to Remote") {
             steps {
                 // 
+                script {
+                    // Ensure the /var/www/html directory is a git repository
+                    sh '''
+                        sudo su -c "
+                        if [ ! -d /var/www/html/.git ]; then
+                            git clone https://github.com/patrickabrena/hack-page.git /var/www/html
+                        fi
+                        cd /var/www/html
+                        git reset --hard HEAD
+                        git pull origin main
+                        "
+                    '''
+                }
 
             }
         }
@@ -24,7 +37,8 @@ pipeline {
 
 
 
-// trying to use 'scp' command now to copy files from 
+// look at newest GPT suggestion for working around sudo command
+
 
 
 
