@@ -2,6 +2,10 @@
 pipeline {
     agent any
 
+    environment {
+        // Set this to the ID of the SSH key you added to Jenkins credentials
+        GIT_SSH_CREDENTIALS_ID = '2f338a04-1f29-42e8-9ff9-03add894c545'
+    }
     
     stages {
         stage("Git Checkout") {
@@ -15,6 +19,8 @@ pipeline {
                 // 
                 script {
                     // Ensure the /var/www/html directory is a git repository
+                    // Wrap the git commands with sshagent
+                    sshagent (credentials: [env.GIT_SSH_CREDENTIALS_ID]) {
                     sh '''
                         sudo su -c "
                         if [ ! -d /var/www/html/.git ]; then
@@ -25,6 +31,7 @@ pipeline {
                         git pull origin main
                         "
                     '''
+                    }
                 }
 
             }
