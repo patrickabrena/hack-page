@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -10,7 +9,24 @@ pipeline {
     stages {
         stage("Git Checkout") {
             steps {
-            git branch: 'main', credentialsId: '2f338a04-1f29-42e8-9ff9-03add894c545', url: 'https://github.com/patrickabrena/hack-page.git'
+                git branch: 'main', credentialsId: env.GIT_SSH_CREDENTIALS_ID, url: 'https://github.com/patrickabrena/hack-page.git'
+            }
+        }
+
+        stage('Use SSH Key'){
+            steps {
+                script {
+                    // Start the SSh agent
+                    sshagent(['credentials' : [env.GIT_SSH_CREDENTIALS_ID]]) {
+                        // Add the SSH key from the Jenkins credential
+                        sh "echo '${env.GIT_SSH_CREDENTIALS_ID}' > ~/.ssh/id_rsa"
+                        sh "chmod 600 ~/.ssh/id_rsa"
+                        sh "ssh-add ~/.ssh/id_rsa"
+
+                        // Verify the Key
+                        sh "ssh-add -l"
+                    }
+                }
             }
         }
         
@@ -21,31 +37,24 @@ pipeline {
                     // Ensure the /var/www/html directory is a git repository
                     // Wrap the git commands with sshagent
                     sshagent (credentials: [env.GIT_SSH_CREDENTIALS_ID]) {
-                    sh '''
-                        sudo su -c "
-                        if [ ! -d /var/www/html/.git ]; then
-                            git clone https://github.com/patrickabrena/hack-page.git /var/www/html
-                        fi
-                        cd /var/www/html
-                        
-                        git pull origin main
-                        "
-                    '''
+                        sh '''
+                            sudo su -c "
+                            if [ ! -d /var/www/html/.git ]; then
+                                git clone https://github.com/patrickabrena/hack-page.git /var/www/html
+                            fi
+                            cd /var/www/html
+                            git pull origin main
+                            "
+                        '''
                     }
                 }
-
             }
         }
     }
-    
-    
-    
+    post {
+        always {
+            // Cleanup SSH agent
+            sh 'ssh-agent -k'
+        }
+    }
 }
-
-
-
-// look at newest GPT suggestion for working around sudo command
-
-
-
-
